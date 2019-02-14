@@ -1,0 +1,2 @@
+# qtapps
+Test Qt applications
