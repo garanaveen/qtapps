@@ -3,13 +3,16 @@
 #include <QTimer>
 #include <iostream>
 
-class testqtimer : QObject
+class testqtimer : public QObject
 {
-    Q_OBJECT
-
+    Q_OBJECT;
 public:
-    testqtimer();
+    explicit testqtimer(QObject *parent = 0);
     void TestTimerTypes();
+
+public slots:
+    void VeryCoarseTimerSlot();
+
 private:
     QTimer VeryCoarseTimerObj;
     void SetupVeryCoarseTimer();
