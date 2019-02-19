@@ -7,8 +7,7 @@
 
 namespace
 {
-    constexpr const char* PROCESS_NAME = "top";
-    constexpr const char* LOG_FILE = "/home/ng81401/tada-stdout";
+    constexpr const char* LOG_FILE = "tada-stdout";
 }
 
 TestQProcess::TestQProcess(QObject *parent):
@@ -35,22 +34,23 @@ QString TestQProcess::GenerateFileName(const QString& appName)
 
 void TestQProcess::Cleanup()
 {
-    QProcess::startDetached(QString("rm %1*").arg(LOG_FILE));
+    QProcess::startDetached(QString("rm %1*").arg(QDir::homePath() + QDir::separator() + LOG_FILE));
 }
 
-//void TestQProcess::StartProcess()
 void TestQProcess::StartProcess(const QString& program, const QStringList &arguments)
 {
     ProcessLauncher* Launcher = new ProcessLauncher();
+//    QProcess* Launcher = new QProcess();
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
     //How to redirect the output from a process started by QProcess to a file?
-    QString stdoutFile = GenerateFileName(LOG_FILE);
-    QObject::connect(Launcher, SIGNAL(finished(int,QProcess::ExitStatus)), Launcher, SLOT(HandleFinishedStateSlot()));
+    QString stdoutFile = GenerateFileName(QDir::homePath() + QDir::separator() + LOG_FILE);
+//    QObject::connect(Launcher, SIGNAL(finished(int,QProcess::ExitStatus)), Launcher, SLOT(deleteLater()));
+    QObject::connect(Launcher, SIGNAL(finished(int, QProcess::ExitStatus)), Launcher, SLOT(HandleFinishedStateSlot()));
     QObject::connect(Launcher, SIGNAL(started()), Launcher, SLOT(HandleStartedStateSlot()));
 
 
     Launcher->setStandardOutputFile(stdoutFile, QIODevice::Truncate);
     Launcher->start(program, arguments);
-    Launcher->waitForStarted();
+//    Launcher->waitForStarted();
 }
