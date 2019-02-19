@@ -1,5 +1,4 @@
 #include "testqprocess.h"
-#include <QProcess>
 #include <QDebug>
 #include <QDir>
 #include <QDateTime>
@@ -9,10 +8,11 @@
 namespace
 {
     constexpr const char* PROCESS_NAME = "top";
-    constexpr const char* LOG_FILE = "/home/ng81401/tada-stdout.log";
+    constexpr const char* LOG_FILE = "/home/ng81401/tada-stdout";
 }
 
-TestQProcess::TestQProcess()
+TestQProcess::TestQProcess(QObject *parent):
+    QObject(parent)
 {
 }
 
@@ -26,30 +26,31 @@ QString TestQProcess::combineProgramAndArguments(const QString& program, const Q
     return retVal;
 }
 
-void TestQProcess::GenerateFileName(const QString& appName)
+QString TestQProcess::GenerateFileName(const QString& appName)
 {
    QString stdOutFile = appName + QDateTime::currentDateTime().toString("-yyyy-MM-dd-hh-mm-ss") + ".txt";
    qDebug() << "stdOutFile : " << stdOutFile;
+   return stdOutFile;
 }
 
 void TestQProcess::Cleanup()
 {
-    QProcess::startDetached(QString("rm %1").arg(LOG_FILE));
+    QProcess::startDetached(QString("rm %1*").arg(LOG_FILE));
 }
 
-void TestQProcess::StartProcess()
+//void TestQProcess::StartProcess()
+void TestQProcess::StartProcess(const QString& program, const QStringList &arguments)
 {
-    Cleanup();
+    ProcessLauncher* Launcher = new ProcessLauncher();
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    QProcess ProcessObj; //= new QProcess;
     //How to redirect the output from a process started by QProcess to a file?
-    ProcessObj.setStandardOutputFile(LOG_FILE, QIODevice::Truncate);
-    QStringList arguments;
-    arguments << "-b" << "-n1";
+    QString stdoutFile = GenerateFileName(LOG_FILE);
+    QObject::connect(Launcher, SIGNAL(finished(int,QProcess::ExitStatus)), Launcher, SLOT(HandleFinishedStateSlot()));
+    QObject::connect(Launcher, SIGNAL(started()), Launcher, SLOT(HandleStartedStateSlot()));
 
-    QString programWithArguments= combineProgramAndArguments(PROCESS_NAME, arguments);
-    ProcessObj.set
-    ProcessObj.start(programWithArguments);
-//    ProcessObj.waitForStarted();
+
+    Launcher->setStandardOutputFile(stdoutFile, QIODevice::Truncate);
+    Launcher->start(program, arguments);
+    Launcher->waitForStarted();
 }

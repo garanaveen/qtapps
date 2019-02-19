@@ -18,7 +18,9 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    testqprocess.cpp
+    testqprocess.cpp \
+    processlauncher.cpp
 
 HEADERS += \
-    testqprocess.h
+    testqprocess.h \
+    processlauncher.h
