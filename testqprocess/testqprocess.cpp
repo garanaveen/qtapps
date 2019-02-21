@@ -47,9 +47,8 @@ void TestQProcess::StartProcess(const QString& program, const QStringList &argum
     //How to redirect the output from a process started by QProcess to a file?
     QString stdoutFile = GenerateFileName(QDir::homePath() + QDir::separator() + LOG_FILE);
 //    QObject::connect(Launcher, SIGNAL(finished(int,QProcess::ExitStatus)), Launcher, SLOT(deleteLater()));
-    QObject::connect(Launcher, SIGNAL(finished(int, QProcess::ExitStatus)), Launcher, SLOT(HandleFinishedStateSlot()));
+    QObject::connect(Launcher, SIGNAL(finished(int, QProcess::ExitStatus)), Launcher, SLOT(HandleFinishedStateSlot(int, QProcess::ExitStatus)));
     QObject::connect(Launcher, SIGNAL(started()), Launcher, SLOT(HandleStartedStateSlot()));
-
 
     Launcher->setStandardOutputFile(stdoutFile, QIODevice::Truncate);
     Launcher->start(program, arguments);

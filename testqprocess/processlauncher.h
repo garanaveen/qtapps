@@ -11,8 +11,8 @@ public:
     void LaunchProcess();
 
 public slots:
-    void HandleFinishedStateSlot();
     void HandleStartedStateSlot();
+    void HandleFinishedStateSlot(int exitCode, QProcess::ExitStatus exitStatus);
 };
 
 #endif // PROCESSLAUNCHER_H

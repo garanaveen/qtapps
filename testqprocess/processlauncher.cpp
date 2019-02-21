@@ -12,8 +12,9 @@ void ProcessLauncher::LaunchProcess()
 
 }
 
-void ProcessLauncher::HandleFinishedStateSlot()
+void ProcessLauncher::HandleFinishedStateSlot(int exitCode, QProcess::ExitStatus exitStatus)
 {
+    qDebug() << "ProcessLauncher::HandleFinishedStateSlot() exitCode : " << exitCode << "exitStatus : " << exitStatus ;
     qDebug() << "ProcessLauncher::HandleFinishedStateSlot() calling this->deleteLater()";
     this->deleteLater();
 }
