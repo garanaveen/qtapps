@@ -11,14 +11,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
    QWidget* myCentralWidget = new QWidget(this);
    myCentralWidget->setObjectName(QString::fromUtf8("myCentralWidget"));
+
    QWidget* myVerticalLayoutWidget = new QWidget(myCentralWidget);
    myVerticalLayoutWidget->setObjectName(QString::fromUtf8("myVerticalLayoutWidget"));
-   myVerticalLayoutWidget->setGeometry(QRect(100, 100, 100, 100));
+
    QVBoxLayout* myVerticalLayout = new QVBoxLayout(myVerticalLayoutWidget);
-   myVerticalLayout->setSpacing(6);
-   myVerticalLayout->setContentsMargins(11, 11, 11, 11);
    myVerticalLayout->setObjectName(QString::fromUtf8("myVerticalLayout"));
-   myVerticalLayout->setContentsMargins(0, 0, 0, 0);
 
    for(int j = 0; j < 1; j++)
    {
