@@ -1,0 +1,3 @@
+New file or project
+Qt Widgets Application
+This gives you MainWindow.
