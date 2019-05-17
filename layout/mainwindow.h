@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QRadioButton>
 #include <QLabel>
+#include <QVBoxLayout>
 
 
 namespace Ui {
@@ -18,6 +19,7 @@ public:
    explicit MainWindow(QWidget *parent = 0);
    ~MainWindow();
 
+   void CreateLayoutItem(QVBoxLayout* myVerticalLayout);
 private:
    Ui::MainWindow *ui;
 QRadioButton* CreateRadioButtonItem();
