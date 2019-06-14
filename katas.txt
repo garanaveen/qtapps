@@ -1,0 +1,5 @@
+Write an application to repetatively run a command/executable depending on the configuration of a file.
+Say, repeatively (say every 10 seconds) run "top" and redirect the output to a timestamped file when the contents of a configuration file is "KeepRunning" . Stop running the command when the file has "StopRunning"
+Changing the configuration to "KeepRunning" should start the repetative running back again.
+
+-------------------------------------------------------------------------------------------------------
